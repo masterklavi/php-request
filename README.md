@@ -17,6 +17,7 @@ print_r(  Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' =>
 ```
 
 List of curl options:
+ 
 | Name | Type | Default | Description |
 |---|---|---|---|
 | follow | boolean | `false` | Follow HTTP redirections (see *CURLOPT_FOLLOWLOCATION*) |
@@ -27,6 +28,7 @@ List of curl options:
 | referer | string |  | The contents of the "Referer: " header (see *CURLOPT_REFERER*) |
 
 List of special options:
+
 | Name | Type | Default | Description |
 |---|---|---|---|
 | allowed_codes | array | `[200]` | Allowed HTTP codes |
