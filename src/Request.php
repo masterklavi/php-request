@@ -10,7 +10,14 @@ class Request
 {
     public static $silent_mode = false;
 
+    
     public static function get($url, array $options = [])
+    {
+        return self::request($url, $options);
+    }
+
+
+    public static function request($url, array $options = [])
     {
         $ch = curl_init();
 
