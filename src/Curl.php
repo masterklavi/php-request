@@ -87,4 +87,17 @@ class Curl
 
         return $set;
     }
+
+    public static function resetCurl(&$ch)
+    {
+        if (function_exists('curl_reset'))
+        {
+            curl_reset($ch);
+        }
+        else
+        {
+            curl_close($ch);
+            $ch = curl_init();
+        }
+    }
 }
