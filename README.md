@@ -63,8 +63,8 @@ Requests the given URL.
 mixed Request::request(string $url, array $options = [])
 ```
 ##### Parameters
-`$url` – URL address  
-`$options` – Array of [request options](#requestoptions)  
+`$url` – `string` of URL address  
+`$options` – `array` of [request options](#request-options)  
 ##### Return Values
 Returns a response (body) as `string` by default. 
 Returns a `mixed` value when the `format` option's set. 
@@ -84,8 +84,8 @@ Requests the given URLs (parallel requests using curl multi).
 mixed Request::multi(string $urls, array $options = [])
 ```
 ##### Parameters
-`$url` – Array of URL address strings or arrays of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['format' => 'json']] ]`)  
-`$options` – Array of [request options](#requestoptions)  
+`$url` – `array` of URL address `string`s or `array`s of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['format' => 'json']] ]`)  
+`$options` – `array` of [request options](#request-options)  
 ##### Return Values
 Returns an `array` of results for the given urls.
 Result may contain: 
