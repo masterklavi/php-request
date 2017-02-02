@@ -14,43 +14,8 @@ class Request
     {
         $ch = curl_init();
 
-        // default options
-        curl_setopt_array($ch, [
-            CURLOPT_URL => $url,
-            CURLOPT_HEADER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_TIMEOUT => 300,
-            CURLOPT_ENCODING => '', // decompress automatically (zlib)
-        ]);
-
-        // custom options
-        if (isset($options['follow']))
-        {
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, (bool)$options['follow']);
-            curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-        }
-        if (isset($options['encoding']))
-        {
-            curl_setopt($ch, CURLOPT_ENCODING, $options['encoding']);
-        }
-        if (isset($options['timeout']))
-        {
-            curl_setopt($ch, CURLOPT_TIMEOUT, (int)$options['timeout']);
-        }
-        if (isset($options['cookie']))
-        {
-            curl_setopt($ch, CURLOPT_COOKIE, $options['cookie']);
-        }
-        if (isset($options['headers']))
-        {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $options['headers']);
-        }
-        if (isset($options['referer']))
-        {
-            curl_setopt($ch, CURLOPT_REFERER, $options['referer']);
-        }
+        // curl options
+        curl_setopt_array($ch, self::getOptSet($url, $options));
 
         // additional params
         $allowed_codes = isset($options['allowed_codes']) ? (array)$options['allowed_codes'] : [200];
@@ -104,5 +69,49 @@ class Request
         self::$silent_mode OR trigger_error("no attemps");
         curl_close($ch);
         return false;
+    }
+    
+
+    protected static function getOptSet($url, array $options = [])
+    {
+        // default options
+        $set = [
+            CURLOPT_URL => $url,
+            CURLOPT_HEADER => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_TIMEOUT => 300,
+            CURLOPT_ENCODING => '', // decompress automatically (zlib)
+        ];
+
+        // custom options
+        if (isset($options['follow']))
+        {
+            $set[CURLOPT_FOLLOWLOCATION] = (bool)$options['follow'];
+            $set[CURLOPT_MAXREDIRS] = 10;
+        }
+        if (isset($options['encoding']))
+        {
+            $set[CURLOPT_ENCODING] = $options['encoding'];
+        }
+        if (isset($options['timeout']))
+        {
+            $set[CURLOPT_TIMEOUT] = (int)$options['timeout'];
+        }
+        if (isset($options['cookie']))
+        {
+            $set[CURLOPT_COOKIE] = $options['cookie'];
+        }
+        if (isset($options['headers']))
+        {
+            $set[CURLOPT_HTTPHEADER] = (array)$options['headers'];
+        }
+        if (isset($options['referer']))
+        {
+            $set[CURLOPT_REFERER] = $options['referer'];
+        }
+
+        return $set;
     }
 }

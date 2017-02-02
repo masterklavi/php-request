@@ -23,6 +23,8 @@ List of curl options:
  
 | Name | Type | Default | Description |
 |---|---|---|---|
+| method | string | `GET` | The method of the HTTP request (GET, POST, HEAD, PUT, DELETE) (see *CURLOPT_POST*, *CURLOPT_CUSTOMREQUEST*) |
+| data | string, array |  | Querystring for GET, HEAD and DELETE requests, or request body for others (see *CURLOPT_POSTFIELDS*) |
 | follow | boolean | `false` | Follow HTTP redirections (see *CURLOPT_FOLLOWLOCATION*) |
 | encoding | string |  | The contents of the "Accept-Encoding: " header (see *CURLOPT_ENCODING*) |
 | timeout | integer | `300` | The timeout of one request (see *CURLOPT_TIMEOUT*) |
