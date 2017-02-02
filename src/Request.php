@@ -70,6 +70,7 @@ class Request
             }
 
             $result = $format ? Format::make($format, $body, $header) : $body;
+            unset($header, $body);
 
             if ($result === false || !$allow_empty && !$result)
             {
