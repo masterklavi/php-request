@@ -34,7 +34,10 @@ class Request
 
         // curl options
         $ch = curl_init();
-        curl_setopt_array($ch, self::getOptSet($url, $options));
+        $set = self::getOptSet($options);
+        $set[CURLOPT_URL] = $url;
+        $set = self::setOptData($set, $options);
+        curl_setopt_array($ch, $set);
 
         // requests
         for ($i = 0; $i < $attempts; $i++)
@@ -84,11 +87,10 @@ class Request
     }
     
 
-    protected static function getOptSet($url, array $options = [])
+    protected static function getOptSet(array $options = [])
     {
         // default options
         $set = [
-            CURLOPT_URL => $url,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false,
@@ -107,25 +109,6 @@ class Request
             else
             {
                 $set[CURLOPT_CUSTOMREQUEST] = $options['method'];
-            }
-        }
-        if (isset($options['data']))
-        {
-            if (!isset($options['method']) || in_array($options['method'], ['GET', 'HEAD', 'DELETE']))
-            {
-                $qs = http_build_query($options['data']);
-                if (strpos($url, '?') === false)
-                {
-                    $set[CURLOPT_URL] = $url.'?'.$qs;
-                }
-                else
-                {
-                    $set[CURLOPT_URL] = $url.'&'.$qs;
-                }
-            }
-            else
-            {
-                $set[CURLOPT_POSTFIELDS] = $options['data'];
             }
         }
         if (isset($options['follow']))
@@ -152,6 +135,33 @@ class Request
         if (isset($options['referer']))
         {
             $set[CURLOPT_REFERER] = $options['referer'];
+        }
+
+        return $set;
+    }
+
+    protected static function setOptData(array $set, array $options = [])
+    {
+        if (!isset($options['data']))
+        {
+            return $set;
+        }
+        
+        if (!isset($options['method']) || in_array($options['method'], ['GET', 'HEAD', 'DELETE']))
+        {
+            $qs = http_build_query($options['data']);
+            if (strpos($set[CURLOPT_URL], '?') === false)
+            {
+                $set[CURLOPT_URL] .= '?'.$qs;
+            }
+            else
+            {
+                $set[CURLOPT_URL] .= '&'.$qs;
+            }
+        }
+        else
+        {
+            $set[CURLOPT_POSTFIELDS] = $options['data'];
         }
 
         return $set;
