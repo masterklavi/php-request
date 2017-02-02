@@ -1,0 +1,14 @@
+{
+    "name": "masterklavi/phprequest",
+    "description": "PHP Request",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "lib-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "phprequest\\": "src/"
+        }
+    }
+}
