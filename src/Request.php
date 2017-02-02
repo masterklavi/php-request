@@ -131,12 +131,24 @@ class Request
             foreach ($pool as &$ch)
             {
                 $key = key($urls);
-                $url = current($urls);
+                $value = current($urls);
                 next($urls) or reset($urls);
 
-                $opt_set[CURLOPT_URL] = $url;
-                $opt_set = Curl::setOptData($opt_set, $options);
-                curl_setopt_array($ch, $opt_set);
+                if (is_array($value) && is_array($value[1]))
+                {
+                    $custom_options = array_merge($options, $value[1]);
+                    $set = Curl::getOptSet($custom_options);
+                    $set[CURLOPT_URL] = $value[0];
+                    $set = Curl::setOptData($set, $custom_options);
+                }
+                else
+                {
+                    $set = $opt_set;
+                    $set[CURLOPT_URL] = $value;
+                    $set = Curl::setOptData($set, $options);
+                }
+                
+                curl_setopt_array($ch, $set);
                 $chs[$key] = &$ch;
                 curl_multi_add_handle($mh, $ch);
             }
