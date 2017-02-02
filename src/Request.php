@@ -4,7 +4,7 @@ namespace phprequest;
 
 /**
  * @author      Master Klavi <masterklavi@gmail.com>
- * @version     0.1
+ * @version     0.2
  */
 class Request
 {
@@ -25,17 +25,16 @@ class Request
 
     public static function request($url, array $options = [])
     {
-        $ch = curl_init();
-
-        // curl options
-        curl_setopt_array($ch, self::getOptSet($url, $options));
-
         // additional params
         $allowed_codes = isset($options['allowed_codes']) ? (array)$options['allowed_codes'] : [200];
         $allow_empty = isset($options['allow_empty']) ? (bool)$options['allow_empty'] : false;
         $format = isset($options['format']) ? $options['format'] : null;
         $charset = isset($options['charset']) && $options['charset'] !== 'utf8' ? $options['charset'] : null;
         $attempts = isset($options['attempts']) ? (int)$options['attempts'] : 5;
+
+        // curl options
+        $ch = curl_init();
+        curl_setopt_array($ch, self::getOptSet($url, $options));
 
         // requests
         for ($i = 0; $i < $attempts; $i++)
