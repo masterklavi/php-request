@@ -1,12 +1,18 @@
 {
     "name": "masterklavi/phprequest",
     "description": "PHP Request",
-    "minimum-stability": "dev",
+    "type": "package",
     "require": {
         "php": ">=5.4.0",
-        "ext-curl": "*",
-        "lib-curl": "*"
+        "ext-curl": "*"
     },
+    "authors": [
+        {
+            "name": "Master Klavi",
+            "email": "masterklavi@gmail.com",
+            "homepage": "http://masterklavi.ru/"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "phprequest\\": "src/"

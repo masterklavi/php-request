@@ -3,18 +3,21 @@
 
 It includes some functions to easy requesting and parsing data.
 
+
 ### Request::get
 
-`mixed \phprequest\Request::get(string $url, array $options = [])`
+#### Examples
 
-Example:
 ```PHP
 use \phprequest\Request;
-use \phprequest\Format;
 
 print_r(  Request::get('https://github.com/')  );
 print_r(  Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json'])  );
 ```
+
+#### Syntax
+
+`mixed \phprequest\Request::get(string $url, array $options = [])`
 
 List of curl options:
  
@@ -36,3 +39,44 @@ List of special options:
 | format | string, callable |  | The way to prepare body: 'json', 'json_assoc', 'xml', callable (args: `$body`, `$header`) |
 | charset | string |  | The charset of requested content (the result will contain 'utf8') |
 | attempts | integer | `5` | The number of request attempts |
+
+#### Requirements
+
+- PHP version 5.4.0 or higher
+- PHP extension `ext-curl` enabled
+
+#### Installation 
+
+##### Using Composer
+
+Get the package:
+```
+$ composer require masterklavi/phprequest
+```
+
+Include `vendor/autoload.php`:
+```PHP
+include 'vendor/autoload.php';
+use \phprequest\Request;
+
+$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json']);
+echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
+```
+
+#### Manual Installation
+
+Clone git repository:
+```
+$ git clone https://github.com/masterklavi/phprequest.git
+```
+or download the package from https://github.com/masterklavi/phprequest/archive/master.zip
+
+Include `autoload.php`:
+```PHP
+<?php
+include 'autoload.php';
+use \phprequest\Request;
+
+$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json']);
+echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
+```
