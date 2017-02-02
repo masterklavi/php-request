@@ -22,6 +22,17 @@ class Request
         return self::request($url, $options);
     }
 
+    public static function multiGet(array $urls, array $options = [])
+    {
+        return self::multi($urls, $options);
+    }
+
+    public static function multiPost(array $urls, array $options = [])
+    {
+        $options['method'] = 'POST';
+        return self::multi($urls, $options);
+    }
+
 
     public static function request($url, array $options = [])
     {
