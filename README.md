@@ -8,8 +8,17 @@ It includes some functions to easy requesting and parsing data.
 ```PHP
 use \phprequest\Request;
 
-print_r(  Request::get('https://github.com/')  );
-print_r(  Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json'])  );
+print Request::request('https://api.ipify.org/'); // prints your IP address received from https://api.ipify.org/
+print PHP_EOL;
+
+print Request::get('https://api.ipify.org?format=json', ['format' => 'json'])->ip, PHP_EOL;
+print Request::get('https://api.ipify.org?format=json', ['format' => 'json_assoc'])['ip'], PHP_EOL;
+
+// Request::post('http://example.com', ['data' => ['name' => 'John']]);
+
+// Request::multi(['http://example.com', 'http://example.com/1', 'http://example.com/2'], ['concurrency' => 2]);
+// Request::multiPost(['http://example.com', ['http://example.com/1', ['format' => 'json']], 'http://example.com/2'], ['concurrency' => 2]);
+
 ```
 
 ## Requirements
