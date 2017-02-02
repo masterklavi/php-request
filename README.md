@@ -82,3 +82,23 @@ use \phprequest\Request;
 $data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json']);
 echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
 ```
+
+### Request::post
+
+...
+
+### Request::request
+
+...
+
+### Request::multi
+
+...
+
+### Request::multiGet
+
+...
+
+### Request::multiPost
+
+...
