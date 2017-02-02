@@ -15,6 +15,12 @@ class Request
     {
         return self::request($url, $options);
     }
+    
+    public static function post($url, array $options = [])
+    {
+        $options['method'] = 'POST';
+        return self::request($url, $options);
+    }
 
 
     public static function request($url, array $options = [])
@@ -93,6 +99,36 @@ class Request
         ];
 
         // custom options
+        if (isset($options['method']))
+        {
+            if ($options['method'] === 'POST')
+            {
+                $set[CURLOPT_POST] = true;
+            }
+            else
+            {
+                $set[CURLOPT_CUSTOMREQUEST] = $options['method'];
+            }
+        }
+        if (isset($options['data']))
+        {
+            if (!isset($options['method']) || in_array($options['method'], ['GET', 'HEAD', 'DELETE']))
+            {
+                $qs = http_build_query($options['data']);
+                if (strpos($url, '?') === false)
+                {
+                    $set[CURLOPT_URL] = $url.'?'.$qs;
+                }
+                else
+                {
+                    $set[CURLOPT_URL] = $url.'&'.$qs;
+                }
+            }
+            else
+            {
+                $set[CURLOPT_POSTFIELDS] = $options['data'];
+            }
+        }
         if (isset($options['follow']))
         {
             $set[CURLOPT_FOLLOWLOCATION] = (bool)$options['follow'];
