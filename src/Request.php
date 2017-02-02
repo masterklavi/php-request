@@ -212,7 +212,14 @@ class Request
                 break;
             }
         }
-        
+
+        // clear pool
+        foreach ($pool as $ch)
+        {
+            curl_close($ch);
+        }
+
+        // sort results
         $sorted = [];
         $failed = 0;
         foreach ($keys as $key)
