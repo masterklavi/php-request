@@ -98,7 +98,7 @@ class Request
         return false;
     }
     
-    public static function multi($urls, array $options = [])
+    public static function multi(array $urls, array $options = [])
     {
         // additional params
         $allowed_codes = isset($options['allowed_codes']) ? (array)$options['allowed_codes'] : [200];
