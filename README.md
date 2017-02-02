@@ -63,18 +63,18 @@ Requests the given URL.
 mixed Request::request(string $url, array $options = [])
 ```
 ##### Parameters
-`$url` -- URL address
-`$options` -- Array of [request options](#options)
+`$url` – URL address  
+`$options` – Array of [request options](#requestoptions)  
 ##### Return Values
 Returns a response (body) as `string` by default. 
 Returns a `mixed` value when the `format` option's set. 
 Returns `false` on failure.
 
 ### Request::get
-Alias of [`Request::request()`](#request-request)
+Alias of [`Request::request()`](#requestrequest)
 
 ### Request::post
-Equivalent of [`Request::request($url, ['method' => 'POST'])`](#request-request)
+Equivalent of [`Request::request($url, ['method' => 'POST'])`](#requestrequest)
 
 ### Request::multi
 Requests the given URLs (parallel requests using curl multi).
@@ -84,8 +84,8 @@ Requests the given URLs (parallel requests using curl multi).
 mixed Request::multi(string $urls, array $options = [])
 ```
 ##### Parameters
-`$url` -- Array of URL address strings or arrays of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['format' => 'json']] ]`)
-`$options` -- Array of [request options](#options)
+`$url` – Array of URL address strings or arrays of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['format' => 'json']] ]`)  
+`$options` – Array of [request options](#requestoptions)  
 ##### Return Values
 Returns an `array` of results for the given urls.
 Result may contain: 
@@ -94,10 +94,10 @@ Result may contain:
 - `false` on failure
 
 ### Request::multiGet
-Alias of [`Request::multi()`](#request-multi)
+Alias of [`Request::multi()`](#requestmulti)
 
 ### Request::multiPost
-Equivalent of [`Request::multi($urls, ['method' => 'POST'])`](#request-multi)
+Equivalent of [`Request::multi($urls, ['method' => 'POST'])`](#requestmulti)
 
 ## Request Options
 
@@ -123,5 +123,5 @@ List of special options:
 | format | string, callable |  | The way to prepare body: 'json', 'json_assoc', 'xml', callable (args: `$body`, `$header`) |
 | charset | string |  | The charset of requested content (the result will contain 'utf8') |
 | attempts | integer | `5` | Number of request attempts |
-| concurrency | integer | `10` | Concurrency of requests |
+| concurrency | integer | `10` | Concurrency of requests in `Request::multi()` |
 
