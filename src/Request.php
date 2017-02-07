@@ -4,7 +4,7 @@ namespace phprequest;
 
 /**
  * @author      Master Klavi <masterklavi@gmail.com>
- * @version     0.3
+ * @version     0.4
  */
 class Request
 {
@@ -80,7 +80,7 @@ class Request
                 $body = iconv($charset, 'utf8', $body);
             }
 
-            $result = $filter ? Filter::apply($filter, $body, $header) : $body;
+            $result = $filter ? Filter::apply($filter, null, $header, $body) : $body;
             unset($header, $body);
 
             if ($result === false || !$allow_empty && !$result)
@@ -191,7 +191,7 @@ class Request
                     $body = iconv($charset, 'utf8', $body);
                 }
 
-                $result = $filter ? Filter::apply($filter, $body, $header) : $body;
+                $result = $filter ? Filter::apply($filter, $key, $header, $body) : $body;
                 unset($header, $body);
 
                 if ($result === false || !$allow_empty && !$result)

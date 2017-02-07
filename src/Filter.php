@@ -8,15 +8,15 @@ use phprequest\Filter\Regex;
 
 /**
  * @author      Master Klavi <masterklavi@gmail.com>
- * @version     0.3
+ * @version     0.4
  */
 class Filter
 {
-    public static function apply($filter, $body, $header)
+    public static function apply($filter, $key, $header, $body)
     {
         if (is_callable($filter))
         {
-            return $filter($body, $header);
+            return $filter($key, $header, $body);
         }
         elseif (is_array($filter) && count($filter) > 1)
         {
