@@ -56,6 +56,15 @@ class Filter
 
                 case 'plain':
                     return $header.$body;
+
+                case 'headers':
+                    return Headers::parse($header);
+
+                case 'headers_body':
+                    return  [
+                                'headers' => Headers::parse($header),
+                                'body' => $body,
+                            ];
             }
         }
 

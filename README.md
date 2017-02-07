@@ -146,6 +146,8 @@ Request::get($url, ['filter' => 'json']);
 - `json_assoc` - interprets the body as json and returns an associative array
 - `xml` - interprets the body as xml and returns SimpleXML objects
 - `plain` - returns full response (with headers) as plain text
+- `headers` - returns a set of the headers
+- `headers_body` - returns a set of the headers and the body as plain text
 
 Complex filters:
 
