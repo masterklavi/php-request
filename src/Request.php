@@ -89,7 +89,7 @@ class Request
                 continue;
             }
 
-            curl_close($ch);
+            Curl::resetCurl($ch);
             return $result;
         }
 
