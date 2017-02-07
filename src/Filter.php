@@ -4,6 +4,7 @@ namespace phprequest;
 
 use phprequest\Filter\Cut;
 use phprequest\Filter\Regex;
+use phprequest\Filter\Headers;
 
 
 /**
