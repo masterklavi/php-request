@@ -11,8 +11,8 @@ use \phprequest\Request;
 print Request::request('https://api.ipify.org/'); // prints your IP address received from https://api.ipify.org/
 print PHP_EOL;
 
-print Request::get('https://api.ipify.org?format=json', ['filter' => 'json'])->ip, PHP_EOL;
-print Request::get('https://api.ipify.org?format=json', ['filter' => 'json_assoc'])['ip'], PHP_EOL;
+print Request::get('https://api.ipify.org?format=json', ['filter' => 'json'])->ip . PHP_EOL;
+print Request::get('https://api.ipify.org?format=json', ['filter' => 'json_assoc'])['ip'] . PHP_EOL;
 
 // Request::post('http://example.com', ['data' => ['name' => 'John']]);
 
@@ -41,7 +41,7 @@ include 'vendor/autoload.php';
 use \phprequest\Request;
 
 $data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['filter' => 'json']);
-echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
+print 'USD: ' . $data->Valute->USD->Value, PHP_EOL;
 ```
 
 ### Manual Installation
@@ -59,7 +59,7 @@ include 'autoload.php';
 use \phprequest\Request;
 
 $data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['filter' => 'json']);
-echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
+print 'USD: ' . $data->Valute->USD->Value, PHP_EOL;
 ```
 
 ## Methods
