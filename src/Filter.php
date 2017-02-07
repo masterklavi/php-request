@@ -53,6 +53,9 @@ class Filter
 
                 case 'xml':
                     return simplexml_load_string($body);
+
+                case 'plain':
+                    return $header.$body;
             }
         }
 
