@@ -129,8 +129,52 @@ List of special options:
 |---|---|---|---|
 | allowed_codes | array | `[200]` | Allowed HTTP codes |
 | allow_empty | boolean | `false` | Allows empty body of the HTTP response |
-| filter | string, callable |  | The way to prepare body: 'json', 'json_assoc', 'xml', callable (args: `$body`, `$header`) |
+| filter | string, callable |  | Filters body (usually to reduce memory usage). [See Available filters](#filters)  |
 | charset | string |  | The charset of requested content (the result will contain 'utf8') |
 | attempts | integer | `5` | Number of request attempts |
 | concurrency | integer | `10` | Concurrency of requests in `Request::multi()` |
 
+### Filters
+
+Plain filters:
+
+```PHP
+Request::get($url, ['filter' => 'json']);
+```
+
+- `json` - interprets the body as json and returns an object
+- `json_assoc` - interprets the body as json and returns an associative array
+- `xml` - interprets the body as xml and returns SimpleXML objects
+
+Complex filters:
+
+```PHP
+Request::get($url, ['filter' => ['filter_name', $option]])
+```
+
+- `cut` - cuts out a new substring using `begin` and `end` substrings (tags)  
+    Syntax: 
+
+    ```PHP
+    Request::get($url, ['filter' => ['cut', $options]])
+    ```
+
+    where `$options` is key-value array that may contains:
+    - `'begin' => 'some string'` - substring as beginning of the cut
+    - `'end' => 'some string'` - substring as ending of the cut
+    - `'case_sensivity' => true` - use begin and end as case sensivity substrings
+    - `'mbstring' => true` - use mb_* functions on cutting
+
+- `regex` - returns an array of the results matched the regular expression (uses `preg_match`)  
+    Syntax:
+
+    ```PHP
+    Request::get($url, ['filter' => ['cut', '#reg.exp. pattern#']])
+    ```
+
+    Returns `null` if the `pattern` doesn't match the body, or `false` if an error occured
+
+- `regex_one` - returns the first matched text (uses `preg_match`)
+- `regex_all` - returns an array of arrays of the results of search used the regular expression (uses `preg_match_all`)
+- `regex_set` - returns an array of arrays of the results of search used the regular expression (uses `preg_match_all` with the set order)
+- `regex_col` - returns an array of the results of the first values matched the regular expression (uses `preg_match_all`)
