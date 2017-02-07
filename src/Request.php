@@ -39,7 +39,7 @@ class Request
         // additional params
         $allowed_codes = isset($options['allowed_codes']) ? (array)$options['allowed_codes'] : [200];
         $allow_empty = isset($options['allow_empty']) ? (bool)$options['allow_empty'] : false;
-        $format = isset($options['format']) ? $options['format'] : null;
+        $filter = isset($options['filter']) ? $options['filter'] : null;
         $charset = isset($options['charset']) && $options['charset'] !== 'utf8' ? $options['charset'] : null;
         $attempts = isset($options['attempts']) ? (int)$options['attempts'] : 5;
 
@@ -80,7 +80,7 @@ class Request
                 $body = iconv($charset, 'utf8', $body);
             }
 
-            $result = $format ? Format::make($format, $body, $header) : $body;
+            $result = $filter ? Filter::apply($filter, $body, $header) : $body;
             unset($header, $body);
 
             if ($result === false || !$allow_empty && !$result)
@@ -103,7 +103,7 @@ class Request
         // additional params
         $allowed_codes = isset($options['allowed_codes']) ? (array)$options['allowed_codes'] : [200];
         $allow_empty = isset($options['allow_empty']) ? (bool)$options['allow_empty'] : false;
-        $format = isset($options['format']) ? $options['format'] : null;
+        $filter = isset($options['filter']) ? $options['filter'] : null;
         $charset = isset($options['charset']) && $options['charset'] !== 'utf8' ? $options['charset'] : null;
         $attempts = isset($options['attempts']) ? (int)$options['attempts'] : 5;
         $concurrency = isset($options['concurrency']) ? (int)$options['concurrency'] : 10;
@@ -191,7 +191,7 @@ class Request
                     $body = iconv($charset, 'utf8', $body);
                 }
 
-                $result = $format ? Format::make($format, $body, $header) : $body;
+                $result = $filter ? Filter::apply($filter, $body, $header) : $body;
                 unset($header, $body);
 
                 if ($result === false || !$allow_empty && !$result)

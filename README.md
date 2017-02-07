@@ -11,13 +11,13 @@ use \phprequest\Request;
 print Request::request('https://api.ipify.org/'); // prints your IP address received from https://api.ipify.org/
 print PHP_EOL;
 
-print Request::get('https://api.ipify.org?format=json', ['format' => 'json'])->ip, PHP_EOL;
-print Request::get('https://api.ipify.org?format=json', ['format' => 'json_assoc'])['ip'], PHP_EOL;
+print Request::get('https://api.ipify.org?format=json', ['filter' => 'json'])->ip, PHP_EOL;
+print Request::get('https://api.ipify.org?format=json', ['filter' => 'json_assoc'])['ip'], PHP_EOL;
 
 // Request::post('http://example.com', ['data' => ['name' => 'John']]);
 
 // Request::multi(['http://example.com', 'http://example.com/1', 'http://example.com/2'], ['concurrency' => 2]);
-// Request::multiPost(['http://example.com', ['http://example.com/1', ['format' => 'json']], 'http://example.com/2'], ['concurrency' => 2]);
+// Request::multiPost(['http://example.com', ['http://example.com/1', ['filter' => 'json']], 'http://example.com/2'], ['concurrency' => 2]);
 
 ```
 
@@ -40,7 +40,7 @@ Include `vendor/autoload.php`:
 include 'vendor/autoload.php';
 use \phprequest\Request;
 
-$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json']);
+$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['filter' => 'json']);
 echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
 ```
 
@@ -58,7 +58,7 @@ Include `autoload.php`:
 include 'autoload.php';
 use \phprequest\Request;
 
-$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['format' => 'json']);
+$data = Request::get('http://www.cbr-xml-daily.ru/daily_json.js', ['filter' => 'json']);
 echo 'USD: ', $data->Valute->USD->Value, PHP_EOL;
 ```
 
@@ -76,7 +76,7 @@ mixed Request::request(string $url, array $options = [])
 `$options` – Array of [request options](#request-options)  
 ##### Return Values
 Returns a response (body) as `string` by default. 
-Returns a `mixed` value when the `format` option's set. 
+Returns a `mixed` value when the `filter` option's set. 
 Returns `false` on failure.
 
 ### Request::get
@@ -93,13 +93,13 @@ Requests the given URLs (parallel requests using curl multi).
 mixed Request::multi(string $urls, array $options = [])
 ```
 ##### Parameters
-`$url` – Array of URL address strings or arrays of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['format' => 'json']] ]`)  
+`$url` – Array of URL address strings or arrays of URL addresses and their options (e.g. `[ 'http://a.ru', ['http://b.ru', ['filter' => 'json']] ]`)  
 `$options` – Array of [request options](#request-options)  
 ##### Return Values
 Returns an `array` of results for the given urls.
 Result may contain: 
 - a response (body) as `string` by default
-- a `mixed` value when the `format` option's set 
+- a `mixed` value when the `filter` option's set 
 - `false` on failure
 
 ### Request::multiGet
@@ -129,7 +129,7 @@ List of special options:
 |---|---|---|---|
 | allowed_codes | array | `[200]` | Allowed HTTP codes |
 | allow_empty | boolean | `false` | Allows empty body of the HTTP response |
-| format | string, callable |  | The way to prepare body: 'json', 'json_assoc', 'xml', callable (args: `$body`, `$header`) |
+| filter | string, callable |  | The way to prepare body: 'json', 'json_assoc', 'xml', callable (args: `$body`, `$header`) |
 | charset | string |  | The charset of requested content (the result will contain 'utf8') |
 | attempts | integer | `5` | Number of request attempts |
 | concurrency | integer | `10` | Concurrency of requests in `Request::multi()` |

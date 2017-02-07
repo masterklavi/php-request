@@ -4,13 +4,13 @@ namespace phprequest;
 
 /**
  * @author      Master Klavi <masterklavi@gmail.com>
- * @version     0.1
+ * @version     0.2
  */
-class Format
+class Filter
 {
-    public static function make($format, $body, $header)
+    public static function apply($filter, $body, $header)
     {
-        switch ($format)
+        switch ($filter)
         {
             case 'json':
                 return json_decode($body);
@@ -22,12 +22,12 @@ class Format
                 return simplexml_load_string($body);
         }
 
-        if (is_callable($format))
+        if (is_callable($filter))
         {
             return $format($body, $header);
         }
 
-        trigger_error("unknown format: {$format}");
+        trigger_error("unknown filter: {$filter}");
         return false;
     }
 }
