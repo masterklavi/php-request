@@ -119,6 +119,7 @@ List of curl options:
 | follow | boolean | `false` | Follow HTTP redirections (see *CURLOPT_FOLLOWLOCATION*) |
 | encoding | string |  | The contents of the "Accept-Encoding: " header (see *CURLOPT_ENCODING*) |
 | timeout | integer | `300` | The timeout of one request (see *CURLOPT_TIMEOUT*) |
+| session | string |  | Path to cookie-based session file (enables session between different calls) (see *CURLOPT_COOKIEJAR*) |
 | cookie | string |  | The contents of the "Cookie: " header (see *CURLOPT_COOKIE*) |
 | headers | array |  | An array of HTTP headers (see *CURLOPT_HTTPHEADER*) |
 | referer | string |  | The contents of the "Referer: " header (see *CURLOPT_REFERER*) |

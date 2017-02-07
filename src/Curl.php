@@ -45,6 +45,11 @@ class Curl
         {
             $set[CURLOPT_TIMEOUT] = (int)$options['timeout'];
         }
+        if (isset($options['session']))
+        {
+            $set[CURLOPT_COOKIEFILE] = $options['session'];
+            $set[CURLOPT_COOKIEJAR] = $options['session'];
+        }
         if (isset($options['cookie']))
         {
             $set[CURLOPT_COOKIE] = $options['cookie'];
