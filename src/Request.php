@@ -134,6 +134,11 @@ class Request
                 $value = current($urls);
                 next($urls) or reset($urls);
 
+                if (isset($chs[$key]))
+                {
+                    continue;
+                }
+
                 if (is_array($value) && is_array($value[1]))
                 {
                     $custom_options = array_merge($options, $value[1]);
