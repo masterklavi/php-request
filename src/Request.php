@@ -167,6 +167,7 @@ class Request
 
             foreach ($chs as $key => &$ch)
             {
+                $url = $urls[$key];
                 $response = curl_multi_getcontent($ch);
                 $error = curl_error($ch);
                 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
