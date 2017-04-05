@@ -123,6 +123,7 @@ List of curl options:
 | cookie | string |  | The contents of the "Cookie: " header (see *CURLOPT_COOKIE*) |
 | headers | array |  | An array of HTTP headers (see *CURLOPT_HTTPHEADER*) |
 | referer | string |  | The contents of the "Referer: " header (see *CURLOPT_REFERER*) |
+| useragent | string |  | The contents of the "User-Agent: " header (see *CURLOPT_USERAGENT*) |
 
 List of special options:
 

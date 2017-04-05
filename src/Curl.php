@@ -62,6 +62,10 @@ class Curl
         {
             $set[CURLOPT_REFERER] = $options['referer'];
         }
+        if (isset($options['useragent']))
+        {
+            $set[CURLOPT_USERAGENT] = $options['useragent'];
+        }
 
         return $set;
     }
