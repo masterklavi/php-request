@@ -66,6 +66,14 @@ class Curl
         {
             $set[CURLOPT_USERAGENT] = $options['useragent'];
         }
+        if (isset($options['proxy']))
+        {
+            $set[CURLOPT_PROXY] = $options['proxy'];
+        }
+        if (isset($options['interface']))
+        {
+            $set[CURLOPT_INTERFACE] = $options['interface'];
+        }
 
         return $set;
     }
