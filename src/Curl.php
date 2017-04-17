@@ -74,6 +74,10 @@ class Curl
         {
             $set[CURLOPT_INTERFACE] = $options['interface'];
         }
+        if (isset($options['curl']))
+        {
+            $set = array_merge($set, $options['curl']);
+        }
 
         return $set;
     }
