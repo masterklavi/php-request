@@ -57,6 +57,7 @@ class Request
             $error = curl_error($ch);
             $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            curl_close($ch);
 
             // check errors
             if ($error)
@@ -89,7 +90,6 @@ class Request
                 continue;
             }
 
-            Curl::resetCurl($ch);
             return $result;
         }
 
@@ -109,14 +109,6 @@ class Request
         $concurrency = isset($options['concurrency']) ? (int)$options['concurrency'] : 10;
         $attempts *= (int)ceil(count($urls) / $concurrency);
 
-        // create pool of chs
-        $pool = [];
-        for ($i = 0; $i < $concurrency; $i++)
-        {
-            $ch = curl_init();
-            $pool[] = $ch;
-        }
-
         // curl options
         $opt_set = Curl::getOptSet($options);
 
@@ -128,7 +120,7 @@ class Request
             $mh = curl_multi_init();
 
             $chs = [];
-            foreach ($pool as &$ch)
+            for ($i = 0; $i < $concurrency; $i++)
             {
                 $key = key($urls);
                 $value = current($urls);
@@ -152,9 +144,10 @@ class Request
                     $set[CURLOPT_URL] = $value;
                     $set = Curl::setOptData($set, $options);
                 }
-                
+
+                $ch = curl_init();
                 curl_setopt_array($ch, $set);
-                $chs[$key] = &$ch;
+                $chs[$key] = $ch;
                 curl_multi_add_handle($mh, $ch);
             }
 
@@ -165,7 +158,7 @@ class Request
             }
             while ($running > 0);
 
-            foreach ($chs as $key => &$ch)
+            foreach ($chs as $key => $ch)
             {
                 $url = $urls[$key];
                 $response = curl_multi_getcontent($ch);
@@ -173,7 +166,7 @@ class Request
                 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 $size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
                 curl_multi_remove_handle($mh, $ch);
-                Curl::resetCurl($ch);
+                curl_close($ch);
 
                 // check errors
                 if ($error)
