@@ -44,15 +44,15 @@ class Request
         $attempts = isset($options['attempts']) ? (int)$options['attempts'] : 5;
 
         // curl options
-        $ch = curl_init();
         $set = Curl::getOptSet($options);
         $set[CURLOPT_URL] = $url;
         $set = Curl::setOptData($set, $options);
-        curl_setopt_array($ch, $set);
 
         // requests
         for ($i = 0; $i < $attempts; $i++)
         {
+            $ch = curl_init();
+            curl_setopt_array($ch, $set);
             $response = curl_exec($ch);
             $error = curl_error($ch);
             $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -94,7 +94,6 @@ class Request
         }
 
         self::$silent_mode OR trigger_error("no attemps");
-        curl_close($ch);
         return false;
     }
     
