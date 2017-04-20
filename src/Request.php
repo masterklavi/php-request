@@ -212,12 +212,6 @@ class Request
             }
         }
 
-        // clear pool
-        foreach ($pool as $ch)
-        {
-            curl_close($ch);
-        }
-
         // sort results
         $sorted = [];
         $failed = 0;
