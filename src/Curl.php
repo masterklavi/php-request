@@ -69,6 +69,12 @@ class Curl
         if (isset($options['proxy']))
         {
             $set[CURLOPT_PROXY] = $options['proxy'];
+            $proxy = explode('@', $options['proxy'], 2);
+            if (count($proxy) === 2)
+            {
+                $set[CURLOPT_PROXY] = $proxy[1];
+                $set[CURLOPT_PROXYUSERPWD] = $proxy[0];
+            }
         }
         if (isset($options['interface']))
         {

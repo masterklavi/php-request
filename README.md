@@ -124,7 +124,7 @@ List of curl options:
 | headers | array |  | An array of HTTP headers (see *CURLOPT_HTTPHEADER*) |
 | referer | string |  | The contents of the "Referer: " header (see *CURLOPT_REFERER*) |
 | useragent | string |  | The contents of the "User-Agent: " header (see *CURLOPT_USERAGENT*) |
-| proxy | string |  | Proxy string like IP:PORT (see *CURLOPT_PROXY*) |
+| proxy | string |  | Proxy string like IP:PORT or username:password@IP:PORT (see *CURLOPT_PROXY*, *CURLOPT_PROXYUSERPWD*) |
 | interface | string |  | Used interface (IP or host) (see *CURLOPT_INTERFACE*) |
 | curl | array |  | An array of custom curl options |
 
