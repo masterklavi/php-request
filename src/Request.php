@@ -119,7 +119,7 @@ class Request
             $mh = curl_multi_init();
 
             $chs = [];
-            for ($i = 0; $i < $concurrency; $i++)
+            for ($j = 0; $j < $concurrency; $j++)
             {
                 $key = key($urls);
                 $value = current($urls);
